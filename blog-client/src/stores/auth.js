@@ -6,6 +6,15 @@ export const useAuthStore = defineStore("auth", {
       user: "jon",
     };
   },
-  getters: {},
-  actions: {},
+  actions: {
+    async authenticate(apiRoute, formData) {
+      const res = await fetch(`/api/${apiRoute}`, {
+        method: "post",
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      console.log(data);
+    },
+  },
 });
