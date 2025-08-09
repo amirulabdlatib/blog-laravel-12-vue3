@@ -22,6 +22,7 @@ export const useAuthStore = defineStore("auth", {
         console.log(data);
         localStorage.setItem("token", data.token);
         this.user = data.user;
+        this.router.push({ name: "home" });
       }
     },
   },
