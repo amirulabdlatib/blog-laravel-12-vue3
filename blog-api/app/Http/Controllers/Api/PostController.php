@@ -5,10 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PostController extends Controller
+class PostController extends Controller implements HasMiddleware
 {
-        /**
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth:sanctum', except: ['index', 'show'])
+        ];
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -22,14 +32,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title'=>'required|max:255',
-            'body'=>'required',
+            'title' => 'required|max:255',
+            'body' => 'required',
         ]);
 
-        $post = Post::create($validated);
+        $post = $request->user()->posts()->create($validated);
 
         return $post;
-
     }
 
     /**
@@ -46,8 +55,8 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $validated = $request->validate([
-            'title'=>'required|max:255',
-            'body'=>'required',
+            'title' => 'required|max:255',
+            'body' => 'required',
         ]);
 
         $post->update($validated);
@@ -62,6 +71,6 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return ['message'=>'Post was deleted'];
+        return ['message' => 'Post was deleted'];
     }
 }
