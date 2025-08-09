@@ -28,7 +28,7 @@ class PostController extends Controller
 
         $post = Post::create($validated);
 
-        return ["post"=>$post];
+        return $post;
 
     }
 
@@ -37,7 +37,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post;
     }
 
     /**
@@ -45,7 +45,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validated = $request->validate([
+            'title'=>'required|max:255',
+            'body'=>'required',
+        ]);
+
+        $post->update($validated);
+
+        return $post;
     }
 
     /**
