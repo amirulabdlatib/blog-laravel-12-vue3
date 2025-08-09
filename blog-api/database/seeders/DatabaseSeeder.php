@@ -16,17 +16,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'amirul',
             'email' => 'amirul@example.com',
         ]);
 
-        for ($i = 0; $i < 10; $i++) {
-            Post::create([
+        for ($i = 0; $i < 2; $i++) {
+            $user->posts()->create([
                 'title' => fake()->sentence(),
                 'body'  => fake()->paragraph(3),
             ]);
         }
-
     }
 }
