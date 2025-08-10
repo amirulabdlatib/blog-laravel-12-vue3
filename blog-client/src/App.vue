@@ -17,6 +17,7 @@ onMounted(() => {
 
       <div v-if="authStore.user" class="flex items-center space-x-3">
         <p class="text-sm text-slate-300">Welcome back {{ authStore.user.name }}</p>
+        <RouterLink :to="{ name: 'create-post' }" class="nav-link">New Post</RouterLink>
         <form @submit.prevent="authStore.logout()" class="nav-link">
           <button type="submit">Logout</button>
         </form>
