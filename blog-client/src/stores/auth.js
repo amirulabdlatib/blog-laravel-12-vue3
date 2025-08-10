@@ -20,7 +20,6 @@ export const useAuthStore = defineStore("auth", {
         if (res.ok) {
           this.user = data;
         }
-        console.log(data);
       }
     },
     // Login or register user
@@ -35,10 +34,28 @@ export const useAuthStore = defineStore("auth", {
       if (data.errors) {
         this.errors = data.errors;
       } else {
-        console.log(data);
+        this.errors = {};
         localStorage.setItem("token", data.token);
         this.user = data.user;
         this.router.push({ name: "home" });
+      }
+    },
+    // Logout
+    async logout() {
+      const res = await fetch("/api/logout", {
+        method: "post",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        this.user = null;
+        this.errors = {};
+        localStorage.removeItem("token");
       }
     },
   },

@@ -15,8 +15,13 @@ onMounted(() => {
     <nav>
       <RouterLink to="/" class="nav-link">Home</RouterLink>
 
-      <p v-if="authStore.user" class="text-white">{{ authStore.user.name }}</p>
-      <div>
+      <div v-if="authStore.user" class="flex items-center space-x-3">
+        <p class="text-sm text-slate-300">Welcome back {{ authStore.user.name }}</p>
+        <form @submit.prevent="authStore.logout()" class="nav-link">
+          <button type="submit">Logout</button>
+        </form>
+      </div>
+      <div v-else>
         <RouterLink to="/register" class="nav-link">Register</RouterLink>
         <RouterLink to="/login" class="nav-link">Login</RouterLink>
       </div>
