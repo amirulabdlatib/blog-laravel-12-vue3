@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useAuthStore } from "./auth";
 
 export const usePostsStore = defineStore("postsStore", {
     state: () => {
@@ -36,8 +37,28 @@ export const usePostsStore = defineStore("postsStore", {
                 this.errors = data.errors;
             } else {
                 this.errors = {};
-                console.log(data);
                 this.router.push({ name: "home" });
+            }
+        },
+        // Delete a post
+        async deletePost(post) {
+            const authStore = useAuthStore();
+
+            if (authStore.user.id == post.user_id) {
+                const res = await fetch(`/api/posts/${post.id}`, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+                const data = await res.json();
+                if (data.message == "Post was deleted") {
+                    this.router.push({ name: "home" });
+                } else {
+                    console.error("Delete fail: ", data);
+                }
+            } else {
+                console.warn("Unauthorized to delete this post");
             }
         },
     },

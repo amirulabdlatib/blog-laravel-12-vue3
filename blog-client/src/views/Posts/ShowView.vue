@@ -4,7 +4,7 @@ import { ref, onMounted } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 
 const route = useRoute();
-const { getPost } = usePostsStore();
+const { getPost, deletePost } = usePostsStore();
 const post = ref(null);
 
 onMounted(async () => (post.value = await getPost(route.params.id)));
@@ -27,6 +27,12 @@ onMounted(async () => (post.value = await getPost(route.params.id)));
                 <p>
                     {{ post.body }}
                 </p>
+            </div>
+
+            <div>
+                <form @submit.prevent="deletePost(post)">
+                    <button class="text-red-500 font-bold px-2 py-1 border rounded transition-colors duration-300 ease-in-out hover:bg-red-500 hover:text-gray-200">Delete</button>
+                </form>
             </div>
         </div>
         <div v-else>Page not found</div>
