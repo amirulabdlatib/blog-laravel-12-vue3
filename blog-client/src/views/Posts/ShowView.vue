@@ -12,7 +12,13 @@ onMounted(async () => (post.value = await getPost(route.params.id)));
 
 <template>
     <main class="space-y-6">
-        <h1>Show post detail</h1>
+        <div class="flex justify-between">
+            <h1>Show post detail</h1>
+
+            <p class="text-blue-500 underline">
+                <RouterLink :to="{ name: 'home' }"> Back to home </RouterLink>
+            </p>
+        </div>
 
         <div v-if="post">
             <div class="border-l-4 border-blue-400 pl-4 mb-12">
@@ -24,11 +30,5 @@ onMounted(async () => (post.value = await getPost(route.params.id)));
             </div>
         </div>
         <div v-else>Page not found</div>
-
-        <div>
-            <p class="text-blue-500 underline">
-                <RouterLink :to="{ name: 'home' }"> Back to home </RouterLink>
-            </p>
-        </div>
     </main>
 </template>
