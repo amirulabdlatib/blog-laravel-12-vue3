@@ -39,7 +39,7 @@ class PostController extends Controller implements HasMiddleware
 
         $post = $request->user()->posts()->create($validated);
 
-        return $post;
+        return ['post'=>$post, 'user'=>$post->user];
     }
 
     /**
