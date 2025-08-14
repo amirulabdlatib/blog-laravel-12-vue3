@@ -1,7 +1,7 @@
 <script setup>
 import { usePostsStore } from "@/stores/posts";
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
 
 const route = useRoute();
 const { getPost } = usePostsStore();
@@ -11,7 +11,7 @@ onMounted(async () => (post.value = await getPost(route.params.id)));
 </script>
 
 <template>
-    <main>
+    <main class="space-y-6">
         <h1>Show post detail</h1>
 
         <div v-if="post">
@@ -24,5 +24,11 @@ onMounted(async () => (post.value = await getPost(route.params.id)));
             </div>
         </div>
         <div v-else>Page not found</div>
+
+        <div>
+            <p class="text-blue-500 underline">
+                <RouterLink :to="{ name: 'home' }"> Back to home </RouterLink>
+            </p>
+        </div>
     </main>
 </template>
