@@ -47,7 +47,7 @@ class PostController extends Controller implements HasMiddleware
      */
     public function show(Post $post)
     {
-        return $post;
+        return ['post'=>$post,'user'=>$post->user];
     }
 
     /**
