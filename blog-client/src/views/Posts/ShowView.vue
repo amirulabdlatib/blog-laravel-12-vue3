@@ -17,7 +17,7 @@ onMounted(async () => {
 
 <template>
     <main class="space-y-6">
-        <div class="flex justify-between">
+        <div class="flex justify-between my-4">
             <h1>Show post detail</h1>
 
             <p class="text-blue-500 underline">
@@ -34,10 +34,14 @@ onMounted(async () => {
                 </p>
             </div>
 
-            <div v-if="authStore.user && authStore.user.id == post.user_id">
+            <div v-if="authStore.user && authStore.user.id == post.user_id" class="flex gap-2">
                 <form @submit.prevent="deletePost(post)">
                     <button class="text-red-500 font-bold px-2 py-1 border rounded transition-colors duration-300 ease-in-out hover:bg-red-500 hover:text-gray-200">Delete</button>
                 </form>
+
+                <p class="text-blue-500 font-bold px-2 py-1 border rounded transition-colors duration-300 ease-in-out hover:bg-blue-500 hover:text-gray-200">
+                    <RouterLink :to="{ name: 'edit', params: { id: post.id } }">Edit</RouterLink>
+                </p>
             </div>
         </div>
         <div v-else>Page not found</div>
