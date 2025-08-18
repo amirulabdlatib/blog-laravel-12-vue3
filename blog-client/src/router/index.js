@@ -6,6 +6,7 @@ import { useAuthStore } from "@/stores/auth";
 import CreateView from "@/views/Posts/CreateView.vue";
 import ShowView from "@/views/Posts/ShowView.vue";
 import EditView from "@/views/Posts/EditView.vue";
+import IndexView from "@/views/Users/indexView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,11 @@ const router = createRouter({
             name: "edit",
             component: EditView,
             meta: { auth: true },
+        },
+        {
+            path: "/admin/users",
+            name: "users-list",
+            component: IndexView,
         },
     ],
 });

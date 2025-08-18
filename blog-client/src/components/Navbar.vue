@@ -12,7 +12,7 @@ defineProps({
         <div v-if="authStore.user" class="flex items-center space-x-3">
             <p class="text-sm text-slate-300">Welcome {{ authStore.user.name }}</p>
             <div v-if="authStore.user.is_admin">
-                <RouterLink :to="{ name: 'create-post' }" class="nav-link">Users</RouterLink>
+                <RouterLink :to="{ name: 'users-list' }" class="nav-link">Users</RouterLink>
             </div>
             <div v-else>
                 <RouterLink :to="{ name: 'create-post' }" class="nav-link">New Post</RouterLink>
