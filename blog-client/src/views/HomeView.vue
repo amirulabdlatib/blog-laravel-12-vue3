@@ -5,9 +5,31 @@ import { RouterLink } from "vue-router";
 
 const { getAllPosts } = usePostsStore();
 const posts = ref([]);
+const currentPage = ref(1);
+const hasMorePosts = ref(true);
+const loading = ref(false);
+
+const loadPosts = async (page = 1, append = false) => {
+    loading.value = true;
+    const data = await getAllPosts(page);
+
+    if (append) {
+        posts.value = [...posts.value, ...data.data];
+    } else {
+        posts.value = data.data;
+    }
+
+    hasMorePosts.value = data.current_page < data.last_page;
+    loading.value = false;
+};
+
+const loadMore = async () => {
+    currentPage.value++;
+    await loadPosts(currentPage.value, true);
+};
 
 onMounted(async () => {
-    posts.value = await getAllPosts();
+    await loadPosts();
 });
 </script>
 
@@ -27,6 +49,13 @@ onMounted(async () => {
 
         <div v-else>
             <h2>No posts available</h2>
+        </div>
+
+        <!-- Load More Button -->
+        <div v-if="hasMorePosts" class="text-center my-8 flex justify-end">
+            <button @click="loadMore" :disabled="loading" class="primary-btn max-w-xs">
+                {{ loading ? "Loading..." : "Load More Posts" }}
+            </button>
         </div>
     </main>
 </template>

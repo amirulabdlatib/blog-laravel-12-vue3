@@ -9,8 +9,8 @@ export const usePostsStore = defineStore("postsStore", {
     },
     actions: {
         // get all posts
-        async getAllPosts() {
-            const res = await fetch("/api/posts");
+        async getAllPosts(page = 1) {
+            const res = await fetch(`/api/posts?page=${page}`);
             const data = await res.json();
 
             return data;
