@@ -49,6 +49,12 @@ const router = createRouter({
             path: "/admin/users",
             name: "users-list",
             component: UsersList,
+            meta: { auth: true, admin: true },
+        },
+        {
+            path: "/unauthorized",
+            name: "401",
+            component: () => import("../views/Errors/401View.vue"),
         },
     ],
 });
@@ -63,6 +69,10 @@ router.beforeEach(async (to, from) => {
 
     if (!authstore.user && to.meta.auth) {
         return { name: "login" };
+    }
+
+    if (authstore.user && to.meta.admin && !authstore.user.is_admin) {
+        return { name: "401" };
     }
 });
 
