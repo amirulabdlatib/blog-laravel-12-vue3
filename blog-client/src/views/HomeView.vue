@@ -57,5 +57,9 @@ onMounted(async () => {
                 {{ loading ? "Loading..." : "Load More Posts" }}
             </button>
         </div>
+
+        <div v-else>
+            <p class="text-center mb-10 text-gray-400">No more posts available</p>
+        </div>
     </main>
 </template>
