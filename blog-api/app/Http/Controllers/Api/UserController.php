@@ -33,7 +33,7 @@ class UserController extends Controller implements HasMiddleware
                 'email',
                 'created_at'
             ])
-            ->get();
+            ->paginate(5);
 
         return response()->json([
             'users' => $users,
