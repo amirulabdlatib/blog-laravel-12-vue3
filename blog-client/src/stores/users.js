@@ -11,8 +11,6 @@ export const useUsersStore = defineStore("usersStore", {
             });
 
             const data = await res.json();
-            console.log(data.users);
-
             return data.users;
         },
     },
